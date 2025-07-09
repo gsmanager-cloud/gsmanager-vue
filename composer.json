@@ -6,7 +6,7 @@
     "keywords": ["gsmanager", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.4",
+        "php": "^8.2",
         "gsmanager-cloud/authentication-log": "v1",
         "gsmanager-cloud/framework": "v1",
         "gsmanager-cloud/inertia": "v1",
