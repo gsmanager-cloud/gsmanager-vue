@@ -1,0 +1,78 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "gsmanager-cloud/gsmanager-vue",
+    "type": "project",
+    "description": "The skeleton application for the GSManager framework.",
+    "keywords": ["gsmanager", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "gsmanager-cloud/authentication-log": "v1",
+        "gsmanager-cloud/framework": "v1",
+        "gsmanager-cloud/inertia": "v1",
+        "gsmanager-cloud/permission": "v1",
+        "gsmanager-cloud/route-attributes": "v1",
+        "gsmanager-cloud/tinker": "v1",
+        "gsmanager-cloud/ziggy": "v1"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "gsmanager-cloud/sail": "v1",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.6",
+        "phpunit/phpunit": "^11.5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "GSManager\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php gsm package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php gsm vendor:publish --tag=gsmanager-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php gsm key:generate --ansi",
+            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+            "@php gsm migrate --graceful --ansi"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php gsm serve\" \"php gsm queue:listen --tries=1\" \"php gsm pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "test": [
+            "@php gsm config:clear --ansi",
+            "@php gsm test"
+        ]
+    },
+    "extra": {
+        "gsmanager": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

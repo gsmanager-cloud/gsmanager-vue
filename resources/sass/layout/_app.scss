@@ -1,0 +1,225 @@
+/* === Основные сбросы и шрифт === */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background-color: #f9f9fc;
+    color: #181c32;
+}
+
+/* === Корневой контейнер === */
+.flex-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* === Основная структура: sidebar + wrapper === */
+.page {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* === Sidebar === */
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e4e6ef;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1040;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.35);
+        z-index: 1039;
+    }
+}
+
+/* === Стили для сворачивания/раскрытия sidebar === */
+.sidebar.collapsed {
+    width: 80px;
+
+    .sidebar-logo svg:last-child {
+        display: none;
+    }
+
+    .sidebar-menu .nav-link span {
+        display: none;
+    }
+
+    .sidebar-menu .nav-link {
+        justify-content: center;
+    }
+
+    .nav .nav {
+        display: none;
+    }
+}
+
+.nav .nav {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+}
+
+.nav .nav.open {
+    max-height: 500px; /* Можно настроить по содержимому */
+}
+
+/* === Логотип в Sidebar === */
+.sidebar-logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    border-bottom: 1px solid #f1f1f3;
+    background-color: #ffffff;
+}
+
+/* === Меню в Sidebar === */
+.sidebar-menu {
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* === Ссылки меню === */
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    color: #3f4254;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover,
+    &.active {
+        background-color: #f1faff;
+        color: #009ef7;
+    }
+
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.nav .nav .nav-link {
+    font-size: 0.875rem;
+    padding-left: 1.25rem;
+}
+
+/* === Wrapper (контент справа) === */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    background-color: #f9f9fc;
+}
+
+/* === Navbar === */
+.navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e4e6ef;
+    padding: 1rem 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.navbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* === Контент === */
+.content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #f9f9fc;
+}
+
+/* === Footer === */
+.footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e4e6ef;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #a1a5b7;
+    padding: 1rem 2rem;
+}
+
+/* === Scrollbar (для sidebar-menu) === */
+.sidebar-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+/* === Модальное окно === */
+.modal {
+    z-index: 1055 !important; /* Модалки должны быть сверху всех других элементов */
+}
+
+.modal-backdrop {
+    z-index: 1050 !important; /* Для backdrop */
+}
+
+.modal-dialog {
+    max-width: 500px;
+}
+
+/* === Адаптивные стили для меньших экранов === */
+@media (max-width: 767px) {
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .sidebar-menu {
+        padding: 0.5rem;
+    }
+}
